@@ -1,6 +1,6 @@
 {
   "name": "@pdf-viewer-yee/pdf-viewer-vue2",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -67,7 +67,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Yeessang/pdf-viewer-vue2"
+    "url": "https://github.com/Yeessang/pdf-viewer-yee/tree/main/packages/pdf-viewer-vue2"
   },
   "publishConfig": {
     "access": "public"
