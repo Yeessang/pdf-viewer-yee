@@ -7,7 +7,7 @@
   >
     <section
       ref="pdfWrapper"
-      class="relative w-full h-full pt-[50px] rounded-[10px] overflow-hidden border border-slate-100"
+      class="pdf-section"
       :key="renderKey"
     >
       <div class="pdf-toolbar">
@@ -59,10 +59,10 @@
                   :value="currentPage" 
                   @keyup.enter="pagePressHandler"
                 />
-                <span class="align-top mx-[5px] text-[13px]">/</span>
+                <span class="pdf-input-gap">/</span>
                 <input
                   type="number" 
-                  class="pdf-input disabled:text-[--pdf-toolbar-text-color]" 
+                  class="pdf-input" 
                   :value="totalPage"
                   disabled
                 />
@@ -98,7 +98,7 @@
         </Transition>
         <div 
           v-if="smallMenu"
-          class="toolbar-page text-[11px] pdf-small-menu"
+          class="toolbar-page pdf-small-menu"
         >
           <input
             type="number" 
@@ -106,10 +106,10 @@
             :value="currentPage" 
             @keyup.enter="pagePressHandler"
           />
-          <span class="align-top mx-[5px] text-[13px]">/</span>
+          <span class="pdf-input-gap]">/</span>
           <input
             type="number" 
-            class="pdf-input disabled:text-[--pdf-toolbar-text-color]" 
+            class="pdf-input" 
             :value="totalPage"
             disabled
           />
@@ -118,7 +118,7 @@
           <div class="menu-group-setting" :class="[showSmallMenu && 'menu-group-setting-active']"></div>
         </div>
       </div>
-      <div class="absolute w-full bottom-[0] top-[50px] flex bg-[--pdf-show-bg]">
+      <div class="pdf-drawer">
         <Transition name="transform">
           <div class="pdf-thumbnail" v-show="showThumbnail || showCatalog">
             <PDFTree
@@ -134,10 +134,10 @@
             ></div>
           </div>
         </Transition>
-        <div class="flex-1 relative">
+        <div class="pdf-main">
           <div
             ref="pdfContainer" 
-            class="pdf-container absolute w-full h-full overflow-auto"
+            class="pdf-container pdf-main-content"
           >
             <div class="pdfViewer"></div>
           </div>
@@ -145,30 +145,30 @@
       </div>
       <div
         v-if="loadingPercentVisible"
-        class="absolute top-0 bottom-0 right-0 left-0 bg-[--pdf-mask-bg-color] z-[100]"
+        class="pdf-mask-wrapper"
       >
         <div class="pdf-small-menu">
-          <div class="relative w-[230px] h-[8px] rounded-[8px] overflow-hidden bg-[--pdf-mask-process-bg-color]">
-            <div class="absolute w-full h-full bg-[--pdf-mask-process-highlight] transition-all" :style="{ transform: `translateX(${loadingPercent - 100}%)` }"></div>
+          <div class="pdf-mask-content">
+            <div class="pdf-mask-progress" :style="{ transform: `translateX(${loadingPercent - 100}%)` }"></div>
           </div>
-          <div class="mt-[10px] text-[12px] text-center text-[--pdf-mask-tip-color]">
+          <div class="pdf-mask-tip">
             准备加载文档中，当前进度：{{ loadingPercent }}%
           </div>
         </div>
       </div>
       <div
         v-if="showPrint"
-        class="absolute top-0 bottom-0 right-0 left-0 bg-[--pdf-mask-bg-color] z-[100]"
+        class="pdf-mask-wrapper"
       >
         <div class="pdf-small-menu">
-          <div class="relative w-[230px] h-[8px] rounded-[8px] overflow-hidden bg-[--pdf-mask-process-bg-color]">
-            <div class="absolute w-full h-full bg-[--pdf-mask-process-highlight] transition-all" :style="{ transform: `translateX(${progress - 100}%)` }"></div>
+          <div class="pdf-mask-content">
+            <div class="pdf-mask-progress" :style="{ transform: `translateX(${progress - 100}%)` }"></div>
           </div>
-          <div class="mt-[10px] text-[12px] text-center text-[--pdf-mask-tip-color]">
+          <div class="pdf-mask-tip">
             准备打印文档中，当前进度：{{ progress }}%
           </div>
-          <div class="mt-[10px] text-center">
-            <button class="text-[12px] text-[--pdf-mask-btn-color] py-[3px] px-[5px] rounded-[5px] transition-all hover:text-[--pdf-mask-btn-highlight] bg-transparent border-none outline-none bg-transparent" @click="abort">取消打印</button>
+          <div class="pdf-mask-footer">
+            <button class="pdf-mask-btn" @click="abort">取消打印</button>
           </div>
         </div>
       </div>
@@ -176,13 +176,13 @@
         <div
           v-show="showSearch"
           ref="floating" 
-          class="w-[165px] min-h-[90px] px-[6px] py-[5px] absolute bg-[--pdf-toolbar-bg] rounded-[6px] z-[20] search-float transition-all duration-300 overflow-hidden"
+          class="pdf-search-wrapper"
           :style="{ transformOrigin: `${searchFloatXY.x}px ${searchFloatXY.y}px` }"
         >
-          <div class="flex items-center">
+          <div class="pdf-search-operate">
             <input 
               type="text" 
-              class="w-[100px] rounded-[3px] h-[27px] focus:border-[--pdf-toolbar-bg-highlight] outline-none px-[5px] py-[3px] text-[12px] mr-[5px] bg-[--pdf-toolbar-input-bg] text-[--pdf-toolbar-text-color]"
+              class="pdf-search-input"
               v-model="searchKey"
               @input="input"
               @keyup.enter="findNext"
@@ -190,13 +190,13 @@
             <i class="icon iconfont icon-jiantou_xiangshang pdf-search-toggle" @click="findPrev"></i>
             <i class="icon iconfont icon-jiantou_xiangxia pdf-search-toggle" @click="findNext"></i>
           </div>
-          <div class="flex flex-wrap text-[12px] m-auto text-[--pdf-toolbar-text-color]">
+          <div class="pdf-search-type">
             <div class="pdf-search-option" :class="[searchOptions.highlightAll && 'toolbar-item-active']" @click="toggleSearchOption('highlightAll')">全部高亮显示</div>
-            <div class="pdf-search-option ml-[1px]" :class="[searchOptions.caseSensitive && 'toolbar-item-active']" @click="toggleSearchOption('caseSensitive')">区分大小写</div>
+            <div class="pdf-search-option pdf-ml-1" :class="[searchOptions.caseSensitive && 'toolbar-item-active']" @click="toggleSearchOption('caseSensitive')">区分大小写</div>
             <div class="pdf-search-option" :class="[searchOptions.matchDiacritics && 'toolbar-item-active']" @click="toggleSearchOption('matchDiacritics')">匹配变音符号</div>
-            <div class="pdf-search-option ml-[1px]" :class="[searchOptions.entireWord && 'toolbar-item-active']" @click="toggleSearchOption('entireWord')">全词匹配</div>
+            <div class="pdf-search-option pdf-ml-1" :class="[searchOptions.entireWord && 'toolbar-item-active']" @click="toggleSearchOption('entireWord')">全词匹配</div>
           </div>
-          <div class="text-[12px] text-[--pdf-toolbar-text-color] px-[5px] mt-[3px]" v-if="searchTotal > 0">
+          <div class="pdf-search-statis" v-if="searchTotal > 0">
             第{{ searchIndex }}项，共{{ searchTotal }}项
           </div>
         </div>
@@ -589,95 +589,4 @@ defineExpose({
 </script>
 
 <style>
-.transform-enter-active,
-.transform-leave-active {
-  transform: translateX(-200px);
-}
-
-.transform-enter-from,
-.transform-leave-to {
-  
-}
-
-.float-fade-enter-active,
-.float-fade-leave-active {
-  opacity: 0;
-  transform: scale(0);
-}
-
-.float-fade-enter-from,
-.float-fade-leave-to {
-  opacity: 0;
-  transform: scale(0);
-}
-
-.float-fade-enter-to,
-.float-fade-leave-from {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.pdf-rotate-90 {
-  transform: rotate(-90deg);
-}
-
-.search-float {
-  box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.06);
-}
-.search-float input {
-  border: 1px solid var(--pdf-show-bg);
-}
-.pdf-small-menu {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-.pdf-menu-setting { 
-  position: absolute; 
-  right: 0; 
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  margin-top: 10px;
-}
- 
-.pdf-menu-setting .menu-group-setting { 
-  width: 16px; 
-  height: 17px; 
-  position: relative;
-  top: -1px;
-}
-.pdf-menu-setting .menu-group-setting:before, .pdf-menu-setting .menu-group-setting:after { 
-  content: ""; 
-  display: block; 
-  width: 16px; 
-  height: 2px; 
-  background: var(--pdf-menu-setting-color); 
-  border-radius: 2px; 
-  position: absolute; 
-  left: 0; 
-  -webkit-transition: all 0.35s ease-in-out; 
-  transition: all 0.35s ease-in-out;
-}
-.pdf-menu-setting .menu-group-setting:before { 
-  top: 5px; 
-  box-shadow: 0 10px var(--pdf-menu-setting-color);
-}
-.pdf-menu-setting .menu-group-setting:after { 
-  bottom: 5px; 
-}
-
-
-.pdf-menu-setting .menu-group-setting-active:before { 
-  top: 10px; 
-  box-shadow: none; 
-  -webkit-transform: rotate(225deg); 
-  transform: rotate(225deg); 
-}
-.pdf-menu-setting .menu-group-setting-active:after { 
-  bottom: 5px; 
-  -webkit-transform: rotate(135deg); 
-  transform: rotate(135deg); 
-}
 </style>
