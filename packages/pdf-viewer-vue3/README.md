@@ -1,6 +1,6 @@
 # @pdf-viewer-yee/pdf-viewer-vue3
 
-一款Vue3框架开发的pdf阅读器组件，如果您使用的是Vue2，可以查看[Vue2PDF阅读器组件地址](https://www.npmjs.com/package/@pdf-viewer-yee/pdf-viewer-vue2)
+一款Vue3框架开发的pdf阅读器组件，如果您使用的是Vue2，可以查看[Vue2PDF阅读器组件地址](https://www.npmjs.com/package/@pdf-viewer-yee/pdf-viewer-vue2)，如果您使用的是React，可以查看[ReactPDF阅读器组件地址](https://www.npmjs.com/package/@pdf-viewer-yee/pdf-viewer-react)
 
 
 ## demo

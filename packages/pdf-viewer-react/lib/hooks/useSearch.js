@@ -72,12 +72,12 @@ export function useSearch(pdfInstance) {
           updateSearchFloatXY(draft => {
             draft.x = 120
             draft.y = -10
-          })
+          });
         } else if (placement.includes("top")) {
           updateSearchFloatXY(draft => {
             draft.x = 120
             draft.y = floating.current.offsetHeight + 10
-          })
+          });
         }
         Object.assign(floating.current.style, {
           top: `${y}px`,
@@ -86,7 +86,6 @@ export function useSearch(pdfInstance) {
       });
     } else {
       resetSearch();
-      inputSearch();
     }
   }, [showSearch]);
 
