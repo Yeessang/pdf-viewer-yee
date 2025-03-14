@@ -1,2 +1,2 @@
 export { PDF } from './pdf';
-export { debounce } from './utils';
+export { debounce, bindSize } from './utils';

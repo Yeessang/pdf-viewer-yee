@@ -29,3 +29,15 @@ export function calculateFileSize(bytes) {
   const size = (bytes / Math.pow(1024, i)).toFixed(2);
   return `${size} ${sizes[i]}`;
 }
+
+
+export function bindSize(dom, callback) {
+  const ro = new ResizeObserver(() => {
+    callback?.()
+  });
+  
+  ro.observe(dom);
+  return () => {
+    ro.unobserve(dom)
+  }
+}

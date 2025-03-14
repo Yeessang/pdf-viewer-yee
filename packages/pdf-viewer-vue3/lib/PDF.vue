@@ -106,7 +106,7 @@
             :value="currentPage" 
             @keyup.enter="pagePressHandler"
           />
-          <span class="pdf-input-gap]">/</span>
+          <span class="pdf-input-gap">/</span>
           <input
             type="number" 
             class="pdf-input" 

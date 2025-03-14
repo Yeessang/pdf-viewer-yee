@@ -123,7 +123,6 @@ class PDFThumbnailViewer {
           break;
         }
       }
-      console.log(shouldScroll, "should scroll")
       if (shouldScroll) {
         scrollIntoView(thumbnailView.div, { top: THUMBNAIL_SCROLL_MARGIN });
       }

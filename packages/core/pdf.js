@@ -27,6 +27,7 @@ export class PDF {
     this.viewer = null
     this.downloadManager = null
     this.thumbViewer = null
+    this.isDestroyed = false
     this.listeners = listeners
     this.pdfContainer = pdfContainer
     this.thumbnailContainer = thumbnailContainer
@@ -111,6 +112,7 @@ export class PDF {
         this.listeners?.onScaleChanging?.(scaleInfo)
       })
       const loadingTask = PDFJS.getDocument(options)
+      this.loadingTask = loadingTask
       loadingTask.onProgress = (progressData) => {
         percentLoaded = Math.min(100, Math.round(
           (progressData.loaded / progressData.total) * 100
@@ -120,6 +122,10 @@ export class PDF {
         this.listeners?.onLoadProgress?.(percentLoaded)
       };
       loadingTask.promise.then(ins => {
+        if (this.isDestroyed) {
+          ins.destroy?.();
+          return
+        }
         ins.getMetadata().then(res => console.log(res, 'download info'))
         this.pdf = ins
         this.totalPages = this.pdf._pdfInfo.numPages
@@ -144,6 +150,12 @@ export class PDF {
         this.listeners?.onReady?.()
       })
     })
+  }
+
+  destroy() {
+    this.isDestroyed = true
+    if (this.loadingTask) this.loadingTask.destroy();
+    if (this.pdf) this.pdf.destroy();
   }
 
   async printPDF(progressCb, doneCb) {

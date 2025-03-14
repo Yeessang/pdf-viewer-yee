@@ -1,0 +1,44 @@
+{
+  "name": "@pdf-viewer-yee/pdf-viewer-react",
+  "version": "0.1.1",
+  "private": false,
+  "type": "module",
+  "main": "./dist/pdf-viewer-react.umd.js",
+  "module": "./dist/pdf-viewer-react.es.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@pdf-viewer-yee/core": "workspace:*",
+    "react-transition-group": "^4.4.5",
+    "use-immer": "^0.11.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@floating-ui/dom": "^1.6.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
