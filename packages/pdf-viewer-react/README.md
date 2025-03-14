@@ -29,7 +29,7 @@ npm install @pdf-viewer-yee/pdf-viewer-react
 ```
 
 
-```react
+```js
 import { useState, useRef, useEffect, useCallback } from "react";
 import PDF from "@pdf-viewer-yee/pdf-viewer-react";
 import "@pdf-viewer-yee/pdf-viewer-react/dist/pdf-viewer-react.css";
