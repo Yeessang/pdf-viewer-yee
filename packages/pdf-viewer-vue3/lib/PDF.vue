@@ -291,6 +291,9 @@ const showSmallMenu = ref(false);
 const emits = defineEmits(["pagesLoaded", "pageRendered", "pageChanging", "findChange", "scaleChanging", "ready"]);
 function pagePressHandler(e) {
   let value = Number(e.target.value);
+  changeCurrentPage(value);
+}
+function changeCurrentPage(value) {
   value = Math.min(Math.max(0, value), totalPage.value);
   currentPage.value = value;
   if (pdfInstance.value) {
@@ -583,7 +586,8 @@ defineExpose({
   pdfInstance,
   destroy,
   changePageScale,
-  changeSpreadMode
+  changeSpreadMode,
+  changeCurrentPage
 });
 
 </script>
