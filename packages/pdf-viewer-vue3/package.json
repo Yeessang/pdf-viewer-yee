@@ -1,6 +1,6 @@
 {
   "name": "@pdf-viewer-yee/pdf-viewer-vue3",
-  "version": "0.1.102",
+  "version": "0.1.106",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",

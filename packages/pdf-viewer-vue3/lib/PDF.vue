@@ -121,12 +121,15 @@
       <div class="pdf-drawer">
         <Transition name="transform">
           <div class="pdf-thumbnail" v-show="showThumbnail || showCatalog">
-            <PDFTree
-              v-show="showCatalog"
-              :tree-data="catalogTreeData"
-              node-key="title"
-              @node-click="clickCatalog"
-            ></PDFTree>
+            <div v-show="showCatalog" style="width: 100%; height: 100%;">
+              <slot name="catalog">
+                <PDFTree
+                  :tree-data="catalogTreeData"
+                  node-key="title"
+                  @node-click="clickCatalog"
+                ></PDFTree>
+              </slot>
+            </div>
             <div
               v-show="showThumbnail" 
               class="pdf-thumbnail-container" 
