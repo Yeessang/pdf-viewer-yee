@@ -1,13 +1,10 @@
 
 import * as PDFJS from 'pdfjs-dist'
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry.js'
-import { PDFViewer, PDFFindController, PDFLinkService, EventBus, DownloadManager } from "./pdf_viewer";
+import pdfViewerExports from "./pdf_viewer.js";
+const { PDFViewer, PDFFindController, PDFLinkService, EventBus, DownloadManager } = pdfViewerExports;
 import { PDFThumbnailViewer } from './pdf_thumbnail_viewer'
 import { createPrintService, abort } from './print_service.js'
 import './requestIdleCallback'
-
-
-PDFJS.GlobalWorkerOptions.workerSrc = pdfjsWorker
 
 
 export class PDF {
@@ -92,7 +89,22 @@ export class PDF {
     })
   }
 
-  loadFile(options) {
+  async loadFile(options) {
+    // 动态设置 worker 文件路径
+    if (!PDFJS.GlobalWorkerOptions.workerSrc) {
+      try {
+        // 尝试动态导入 worker 文件来获取正确的 URL 路径
+        const workerModule = await import('pdfjs-dist/build/pdf.worker.min.mjs')
+        // 使用导入的 worker 模块创建 Blob URL
+        const workerBlob = new Blob([workerModule.default || workerModule], { type: 'application/javascript' })
+        const workerUrl = URL.createObjectURL(workerBlob)
+        PDFJS.GlobalWorkerOptions.workerSrc = workerUrl
+        console.log('PDF.js worker 已设置为动态导入的模块:', workerUrl)
+      } catch (error) {
+        console.warn('无法从 dist 目录加载 worker 文件，尝试其他路径:', error)
+      }
+    }
+
     let percentLoaded = 0
     let total = 0
     let loaded = 0

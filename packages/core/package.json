@@ -1,12 +1,13 @@
 {
   "name": "@pdf-viewer-yee/core",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "",
   "main": "dist/bundle.js",
+  "type": "module",
   "private": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "esbuild index.js --bundle --outfile=dist/bundle.js --format=esm --global-name=Core --minify"
+    "build": "esbuild index.js --bundle --outfile=dist/bundle.js --format=esm --global-name=Core --minify && cp node_modules/pdfjs-dist/build/pdf.worker.min.mjs dist/"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +16,7 @@
     "access": "public"
   },
   "dependencies": {
-    "pdfjs-dist": "^3.11.174"
+    "pdfjs-dist": "^4.10.38"
   },
   "devDependencies": {
     "esbuild": "^0.25.1"
